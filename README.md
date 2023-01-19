@@ -1,1 +1,4 @@
-"# proyecto-unidad-7" 
+# Integrantes
+
+- Alex Vega
+- William Vilca
