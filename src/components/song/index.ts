@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { findAll, createSong } from "./controller";
 
-const userRouter: Router = Router();
+const songRouter: Router = Router();
 
-userRouter.get("/", findAll);
-userRouter.post("/", createSong);
+songRouter.get("/", findAll);
+songRouter.post("/", createSong);
 
-export default userRouter;
+export default songRouter;
