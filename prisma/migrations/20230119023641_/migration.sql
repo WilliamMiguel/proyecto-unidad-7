@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "users" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -24,8 +24,8 @@ CREATE TABLE "playlists" (
 CREATE TABLE "songs" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "artist" TEXT,
-    "album" TEXT,
+    "artist" TEXT NOT NULL,
+    "album" TEXT NOT NULL,
     "year" INTEGER NOT NULL,
     "genre" TEXT NOT NULL,
     "duration" INTEGER NOT NULL,
