@@ -15,9 +15,7 @@ CREATE TABLE "playlists" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
-    "songId" INTEGER NOT NULL,
-    CONSTRAINT "playlists_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "playlists_songId_fkey" FOREIGN KEY ("songId") REFERENCES "songs" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "playlists_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -29,7 +27,9 @@ CREATE TABLE "songs" (
     "year" INTEGER NOT NULL,
     "genre" TEXT NOT NULL,
     "duration" INTEGER NOT NULL,
-    "public" BOOLEAN NOT NULL DEFAULT false
+    "is_public" BOOLEAN NOT NULL DEFAULT false,
+    "playlistId" INTEGER NOT NULL,
+    CONSTRAINT "songs_playlistId_fkey" FOREIGN KEY ("playlistId") REFERENCES "playlists" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex
