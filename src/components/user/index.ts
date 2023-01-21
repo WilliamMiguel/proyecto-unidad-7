@@ -4,6 +4,17 @@ import { validateAuthorization } from "../middleware";
 
 const userRouter: Router = Router();
 
+/**
+ * @openapi
+ * /api/v1/users:
+ *  get:
+ *     tags:
+ *     - Users
+ *     description: Obtiene la lista de los usuarios registrados. Necesita autorizacion.
+ *     responses:
+ *       200:
+ *         description: OK
+ */
 userRouter.get("/", validateAuthorization, Controller.findAllUsers);
 userRouter.get("/:id", validateAuthorization, Controller.findUserById);
 userRouter.put("/:id", validateAuthorization, Controller.updateUser);
