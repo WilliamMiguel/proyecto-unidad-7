@@ -7,18 +7,12 @@ export const findAllPlaylist = async (_req: Request, res: Response): Promise<voi
     try {
         const playlists = await prisma.playlist.findMany({
             include: {
-                user: {
-                    select: {
-                        name: true,
-                    }
-                },
+                user: { select: { name: true } },
                 songs: true
             },
         });
 
-        res.status(200).json({
-            data: playlists,
-        });
+        res.status(200).json({ data: playlists });
     }
     catch (error) {
         res.status(500).json({ ok: false, message: error })
@@ -30,26 +24,12 @@ export const findPlaylistById = async (req: Request, res: Response): Promise<voi
         const { id } = req.params;
 
         const playlist = await prisma.playlist.findUnique({
-            where:
-            {
-                id: Number(id)
-            },
-            include: {
-                user: {
-                    select: {
-                        name: true,
-                    }
-                },
-                songs: true
-            },
+            where: { id: Number(id) },
+            include: { user: { select: { name: true } }, songs: true },
         });
 
-        if (!playlist) {
-            res.status(404).json({ message: "Playlist no encontrada" });
-        }
-        else {
-            res.status(200).json({ message: playlist });
-        }
+        playlist ? res.status(200).json({ message: playlist }) : res.status(404).json({ message: "Playlist no encontrada" })
+
     } catch (error) {
         res.status(500).json({ message: error })
     }
@@ -59,12 +39,7 @@ export const createPlaylist = async (req: Request, res: Response): Promise<void>
     try {
         const { name, user } = req.body;
 
-        await prisma.playlist.create({
-            data: {
-                name,
-                user: { connect: { id: user } }
-            }
-        });
+        await prisma.playlist.create({ data: { name, user: { connect: { id: user } } } });
 
         res.status(201).json({ message: "Playlist creada correctamente" });
     }
@@ -79,23 +54,9 @@ export const updatePlaylist = async (req: Request, res: Response): Promise<void>
         const { id_song, id_playlist } = req.body;
 
         const playlistup = await prisma.playlist.update({
-            where:
-            {
-                id: id_playlist
-            },
-            data:
-            {
-                songs: { connect: { id: id_song } }
-            },
-            select:
-            {
-                songs: {
-                    select: {
-                        id: true,
-                        name: true
-                    }
-                }
-            }
+            where: { id: id_playlist },
+            data: { songs: { connect: { id: id_song } } },
+            select: { songs: { select: { id: true, name: true } } }
         });
 
         res.status(200).json({ message: "Actualizado", data: playlistup });
@@ -108,12 +69,7 @@ export const deletePlaylist = async (req: Request, res: Response): Promise<void>
     try {
         const { id } = req.params;
 
-        const playlist = await prisma.playlist.delete({
-            where:
-            {
-                id: Number(id)
-            },
-        });
+        const playlist = await prisma.playlist.delete({ where: { id: Number(id) }, });
 
         res.status(200).json({ message: "Playlist eliminada" });
     }
