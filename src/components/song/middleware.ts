@@ -12,12 +12,16 @@ export const verifyToken = (req: RequestWithAuth, _res: Response, next: NextFunc
     }
 
     try {
-        decodedToken = verify(token, "secret");
+        decodedToken = verify(token, String(process.env.SECRET_KEY));
         console.log('logeado!');
         
     } catch (err) {
         console.error(err);
         return next();
+    }
+
+    if (!decodedToken) {
+        return next()
     }
 
     req.isLogged = true;
