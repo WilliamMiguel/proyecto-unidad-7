@@ -1,13 +1,30 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { verify } from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
-export const findAllSongs = async (_req: Request, res: Response): Promise<void> => {
+export const findAllSongs = async (req: Request, res: Response): Promise<void> => {
     try {
-        const songs = await prisma.song.findMany();
+        let songs
+        if(req.headers.authorization) {
+            const token = req.headers.authorization.split(' ')[1];
+            const decoded = verify(token, "secret")
+            if (decoded) {
+                songs = await prisma.song.findMany();
+            } else {
+               res.status(401).json({ message: 'Error de token' });
+            };
+        } else {
+            songs = await prisma.song.findMany({
+                where: { is_public: true }
+            });
+        }
+        res.status(200).json({
 
-        res.status(200).json({ data: songs });
+            data: songs
+
+        });
     }
     catch (error) {
         res.status(500).json({ message: error })
