@@ -93,7 +93,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
         });
 
         if (user){
-            const token = sign({ name: user?.name }, "secret", {expiresIn: "24h"});
+            const token = sign({ name: user?.name, id: user?.id }, "secret", {expiresIn: "24h"});
             res.status(200).json({
             message: "Usuario logeado correctamente",
             user: user,
