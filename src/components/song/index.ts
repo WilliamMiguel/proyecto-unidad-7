@@ -4,7 +4,7 @@ import { verifyToken } from "./middleware";
 
 const songRouter: Router = Router();
 
-songRouter.get("/",  verifyToken, Controller.findAllSongs);
+songRouter.get("/", verifyToken, Controller.findAllSongs);
 songRouter.post("/", Controller.createSong);
 songRouter.get("/:id", Controller.findSongById);
 songRouter.put("/:id", Controller.updateSong);

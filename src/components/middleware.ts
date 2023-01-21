@@ -1,21 +1,23 @@
 import type { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
 
+export function validateAuthorization(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const { authorization } = req.headers;
 
-export function validateAuthorization(req: Request, res: Response, next: NextFunction) {
+  if (!authorization) return res.status(401).json({ message: "No autorizado" });
 
-    const { authorization } = req.headers;
+  if (!authorization.startsWith("Bearer "))
+    return res.status(400).json({ message: "Formato de token incorrecto" });
 
-    if (!authorization) return res.status(401).json({ message: "No autorizado" });
+  const token = authorization.replace("Bearer ", "");
 
-    if (!authorization.startsWith("Bearer "))
-        return res.status(400).json({ message: "Formato de token incorrecto" })
-
-    const token = authorization.replace("Bearer ", "")
-
-    verify(token, String(process.env.SECRET_KEY), (err, decoded) => {
-        if (err) return res.status(401).json({ message: "Token inválido" });
-        // req.body = decoded;
-        next()
-    });
+  verify(token, String(process.env.SECRET_KEY), (err, decoded) => {
+    if (err) return res.status(401).json({ message: "Token inválido" });
+    // req.body = decoded;
+    next();
+  });
 }

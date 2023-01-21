@@ -1,7 +1,6 @@
-import type { Request} from "express";
+import type { Request } from "express";
 
 export interface RequestWithAuth extends Request {
-    isLogged?: boolean;
-    userId?: string;
-  }
-  
+  isLogged?: boolean;
+  userId?: string;
+}
