@@ -1,10 +1,7 @@
 import type { Request, Response } from "express";
 import { createHmac } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { sign } from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
 
@@ -87,36 +84,26 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     }
 };
 
-export const loginUser = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
-        const loginPassword = createHmac("sha256", "super-secret-key").update(password).digest("hex");
 
-        // Filtrar usuario
-        const userPassword = await prisma.user.findUnique({
-            where: { email },
-            select: { password: true }
+        const user = await prisma.user.findUnique({
+            where: { email }
         });
 
-        // Actualizar "last_session"
-        const updateLastSession = await prisma.user.update({
-            where: { email },
-            data: { last_session: new Date() }
-        });
-
-        console.log("loginPassword: ", loginPassword)
-        console.log("userPassword: ", userPassword)
-        // Verificar contraseña
-        if (userPassword?.password === loginPassword) {
-
-            // Crear token
-            const token = jwt.sign({ email, password }, String(process.env.SECRET_KEY), { expiresIn: "3h" });
-            res.status(200).json({ message: "Usuario logeado correctamente", token });
-        }
-        else {
-            res.status(400).json({ message: "Email o contraseña incorrecta" })
+        if (user){
+            const token = sign({ name: user?.name, id: user?.id }, "secret", {expiresIn: "24h"});
+            res.status(200).json({
+            message: "Usuario logeado correctamente",
+            user: user,
+            token: token,
+            });
+        } else {
+            throw Error("Email o contraseña incorrecta");
         }
     } catch (error) {
-        res.status(500).json({ message: error })
+        console.log('error', error)
+        res.status(500).json({ message: error });
     }
 };

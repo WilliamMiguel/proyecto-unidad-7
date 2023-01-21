@@ -1,13 +1,26 @@
 import type { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { RequestWithAuth } from './type';
 
 const prisma = new PrismaClient();
 
-export const findAllSongs = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        const songs = await prisma.song.findMany();
 
-        res.status(200).json({ data: songs });
+
+export const findAllSongs = async (req: RequestWithAuth, res: Response): Promise<void> => {
+    try {
+        let songs
+        if (req.isLogged){
+            songs = await prisma.song.findMany();
+            console.log('all the songs')
+        } else {
+            songs = await prisma.song.findMany({
+                where: { is_public: true }
+            });            
+            console.log('public songs')
+        }
+        res.status(200).json({
+            data: songs
+        });
     }
     catch (error) {
         res.status(500).json({ message: error })
