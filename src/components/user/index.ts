@@ -11,6 +11,9 @@ userRouter.delete("/:id", validateAuthorization, Controller.deleteUser)
 
 //Crear usuario - Iniciar sesión
 userRouter.post("/", Controller.createUser);
-userRouter.post("/login", Controller.loginUser)
+userRouter.get("/:id", Controller.findUserById);
+userRouter.put("/:id", Controller.updateUser);
+userRouter.delete("/:id", Controller.deleteUser)
+userRouter.post("/login", Controller.login)
 
 export default userRouter;
