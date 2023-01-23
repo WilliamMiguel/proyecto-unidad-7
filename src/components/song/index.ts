@@ -8,7 +8,7 @@ const songRouter: Router = Router();
  * @openapi
  * "/api/v1/songs/":
  *      get:
- *          tags: [ Songs ]           
+ *          tags: [ Songs ]
  *          summary: Listar canciones
  *          description: Obtiene la lista canciones. Si no tiene autorización muestra las canciones públicas.
  *          responses:
@@ -44,7 +44,7 @@ const songRouter: Router = Router();
  *                                          example: 120
  *                                      is_public:
  *                                          type: boolean
- *                                          example: true                              
+ *                                          example: true
  */
 songRouter.get("/", verifyToken, Controller.findAllSongs);
 
@@ -52,7 +52,7 @@ songRouter.get("/", verifyToken, Controller.findAllSongs);
  * @openapi
  * "/api/v1/songs/{id}":
  *      get:
- *          tags: [ Songs ]           
+ *          tags: [ Songs ]
  *          summary: Buscar una canción por ID
  *          description: Obtiene una canción específica. Si no tiene autorización la canción si es pública.
  *          parameters:
@@ -92,7 +92,7 @@ songRouter.get("/", verifyToken, Controller.findAllSongs);
  *                                      example: 120
  *                                  is_public:
  *                                      type: boolean
- *                                      example: true    
+ *                                      example: true
  *              "404":
  *                  description: Canción no encontrada
  *                  content:
@@ -102,7 +102,7 @@ songRouter.get("/", verifyToken, Controller.findAllSongs);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción no encontrada                          
+ *                                      example: Canción no encontrada
  */
 songRouter.get("/:id", verifyToken, Controller.findSongById);
 
@@ -110,7 +110,7 @@ songRouter.get("/:id", verifyToken, Controller.findSongById);
  * @openapi
  * "/api/v1/songs/":
  *      post:
- *          tags: [ Songs ]           
+ *          tags: [ Songs ]
  *          summary: Registrar canción
  *          description: Registra una nueva canción. Necesita autorización.
  *          requestBody:
@@ -139,7 +139,7 @@ songRouter.get("/:id", verifyToken, Controller.findSongById);
  *                                  example: 120
  *                              is_public:
  *                                  type: boolean
- *                                  example: true    
+ *                                  example: true
  *          responses:
  *              "200":
  *                  description: Canción registrada
@@ -150,7 +150,7 @@ songRouter.get("/:id", verifyToken, Controller.findSongById);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción creada correctamente  
+ *                                      example: Canción creada correctamente
  *              "400":
  *                  description: Datos en formato erróneo
  *                  content:
@@ -160,7 +160,7 @@ songRouter.get("/:id", verifyToken, Controller.findSongById);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Datos no válidos                         
+ *                                      example: Datos no válidos
  */
 songRouter.post("/", validateAuthorization, Controller.createSong);
 
@@ -168,7 +168,7 @@ songRouter.post("/", validateAuthorization, Controller.createSong);
  * @openapi
  * "/api/v1/songs/{id}":
  *      put:
- *          tags: [ Songs ]           
+ *          tags: [ Songs ]
  *          summary: Actualizar una canción por ID
  *          description: Actualiza los campos de una canción específica. Necesita autorización.
  *          parameters:
@@ -235,7 +235,7 @@ songRouter.post("/", validateAuthorization, Controller.createSong);
  *                                      example: 120
  *                                  is_public:
  *                                      type: boolean
- *                                      example: true  
+ *                                      example: true
  *              "400":
  *                  description: Datos en formato erróneo
  *                  content:
@@ -255,7 +255,7 @@ songRouter.post("/", validateAuthorization, Controller.createSong);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción no encontrada                         
+ *                                      example: Canción no encontrada
  */
 songRouter.put("/:id", validateAuthorization, Controller.updateSong);
 
@@ -263,7 +263,7 @@ songRouter.put("/:id", validateAuthorization, Controller.updateSong);
  * @openapi
  * "/api/v1/songs/{id}":
  *      delete:
- *          tags: [ Songs ]           
+ *          tags: [ Songs ]
  *          summary: Eliminar una canción por ID
  *          description: Elimina una canción específica. Necesita autorización.
  *          parameters:
@@ -292,7 +292,7 @@ songRouter.put("/:id", validateAuthorization, Controller.updateSong);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción no encontrada                         
+ *                                      example: Canción no encontrada
  */
 songRouter.delete("/:id", validateAuthorization, Controller.deleteSong);
 

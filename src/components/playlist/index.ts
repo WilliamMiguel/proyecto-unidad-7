@@ -7,7 +7,7 @@ const playlistRouter: Router = Router();
  * @openapi
  * "/api/v1/playlist/":
  *      get:
- *          tags: [ Playlists ]           
+ *          tags: [ Playlists ]
  *          summary: Listar playlists
  *          description: Obtiene la lista de playlists. Necesita autorización.
  *          responses:
@@ -63,7 +63,7 @@ const playlistRouter: Router = Router();
  *                                                      example: 120
  *                                                  is_public:
  *                                                      type: boolean
- *                                                      example: true                                                        
+ *                                                      example: true
  */
 playlistRouter.get("/", Controller.findAllPlaylist);
 
@@ -71,7 +71,7 @@ playlistRouter.get("/", Controller.findAllPlaylist);
  * @openapi
  * "/api/v1/playlists/{id}":
  *      get:
- *          tags: [ Playlists ]           
+ *          tags: [ Playlists ]
  *          summary: Buscar una playlist por ID
  *          description: Obtiene una playlist específica. Necesita autorización.
  *          parameters:
@@ -131,7 +131,7 @@ playlistRouter.get("/", Controller.findAllPlaylist);
  *                                                  example: 120
  *                                              is_public:
  *                                                  type: boolean
- *                                                  example: true    
+ *                                                  example: true
  *              "401":
  *                  description: Sin autorización
  *                  content:
@@ -141,7 +141,7 @@ playlistRouter.get("/", Controller.findAllPlaylist);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: No autorizado                                                      
+ *                                      example: No autorizado
  *              "404":
  *                  description: Playlist no encontrada
  *                  content:
@@ -151,7 +151,7 @@ playlistRouter.get("/", Controller.findAllPlaylist);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción no encontrada                          
+ *                                      example: Canción no encontrada
  */
 playlistRouter.get("/:id", Controller.findPlaylistById);
 
@@ -159,7 +159,7 @@ playlistRouter.get("/:id", Controller.findPlaylistById);
  * @openapi
  * "/api/v1/playlists/":
  *      post:
- *          tags: [ Playlists ]           
+ *          tags: [ Playlists ]
  *          summary: Crear playlist
  *          description: Crea una nueva playlist. Necesita autorización.
  *          requestBody:
@@ -184,7 +184,7 @@ playlistRouter.get("/:id", Controller.findPlaylistById);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Playlist creada correctamente  
+ *                                      example: Playlist creada correctamente
  *              "400":
  *                  description: Datos en formato erróneo
  *                  content:
@@ -194,7 +194,7 @@ playlistRouter.get("/:id", Controller.findPlaylistById);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Datos no válidos                         
+ *                                      example: Datos no válidos
  */
 playlistRouter.post("/", Controller.createPlaylist);
 
@@ -202,7 +202,7 @@ playlistRouter.post("/", Controller.createPlaylist);
  * @openapi
  * "/api/v1/playlists/add-song":
  *      put:
- *          tags: [ Playlists ]           
+ *          tags: [ Playlists ]
  *          summary: Añadir canciones a una playlist
  *          description: Añade canciones a una playlist específica. Necesita autorización.
  *          requestBody:
@@ -265,7 +265,7 @@ playlistRouter.post("/", Controller.createPlaylist);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Canción no encontrada                         
+ *                                      example: Canción no encontrada
  */
 playlistRouter.put("/add-song", Controller.updatePlaylist);
 
@@ -273,7 +273,7 @@ playlistRouter.put("/add-song", Controller.updatePlaylist);
  * @openapi
  * "/api/v1/playlists/{id}":
  *      delete:
- *          tags: [ Playlists ]           
+ *          tags: [ Playlists ]
  *          summary: Eliminar una playlists por ID
  *          description: Elimina una playlists específica. Necesita autorización.
  *          parameters:
@@ -312,7 +312,7 @@ playlistRouter.put("/add-song", Controller.updatePlaylist);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Playlist no encontrada                         
+ *                                      example: Playlist no encontrada
  */
 playlistRouter.delete("/:id", Controller.deletePlaylist);
 

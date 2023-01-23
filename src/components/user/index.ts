@@ -8,7 +8,7 @@ const userRouter: Router = Router();
  * @openapi
  * "/api/v1/users/":
  *      get:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Listar usuarios
  *          description: Obtiene la lista de los usuarios registrados. Necesita autorizacion.
  *          responses:
@@ -55,7 +55,7 @@ const userRouter: Router = Router();
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: No autorizado                                  
+ *                                      example: No autorizado
  */
 userRouter.get("/", validateAuthorization, Controller.findAllUsers);
 
@@ -63,7 +63,7 @@ userRouter.get("/", validateAuthorization, Controller.findAllUsers);
  * @openapi
  * "/api/v1/users/{id}":
  *      get:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Buscar usuario por ID
  *          description: Obtiene un usuario en especifico. Necesita autorizacion.
  *          parameters:
@@ -124,7 +124,7 @@ userRouter.get("/", validateAuthorization, Controller.findAllUsers);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: No autorizado                                  
+ *                                      example: No autorizado
  */
 userRouter.get("/:id", validateAuthorization, Controller.findUserById);
 
@@ -132,7 +132,7 @@ userRouter.get("/:id", validateAuthorization, Controller.findUserById);
  * @openapi
  * "/api/v1/users/{id}":
  *      put:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Actualizar usuario por ID
  *          description: Actualiza los campos un usuario en especifico. Necesita autorizacion
  *          parameters:
@@ -205,7 +205,7 @@ userRouter.get("/:id", validateAuthorization, Controller.findUserById);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Usuario no encontrado                              
+ *                                      example: Usuario no encontrado
  */
 userRouter.put("/:id", validateAuthorization, Controller.updateUser);
 
@@ -213,7 +213,7 @@ userRouter.put("/:id", validateAuthorization, Controller.updateUser);
  * @openapi
  * "/api/v1/users/{id}":
  *      delete:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Eliminar usuario por ID
  *          description: Elimina un usuario en especifico. Necesita autorizacion
  *          parameters:
@@ -242,7 +242,7 @@ userRouter.put("/:id", validateAuthorization, Controller.updateUser);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Usuario no encontrado                              
+ *                                      example: Usuario no encontrado
  */
 userRouter.delete("/:id", validateAuthorization, Controller.deleteUser);
 
@@ -250,7 +250,7 @@ userRouter.delete("/:id", validateAuthorization, Controller.deleteUser);
  * @openapi
  * "/api/v1/users/":
  *      post:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Registra un usuario
  *          description: Registro de un nuevo usuario. No necesita autorizacion
  *          requestBody:
@@ -270,7 +270,7 @@ userRouter.delete("/:id", validateAuthorization, Controller.deleteUser);
  *                                  example: luis123
  *                              date_born:
  *                                  type: string
- *                                  example: 2000-10-20 
+ *                                  example: 2000-10-20
  *                                  description: Formato YYYY-MM-DD
  *          responses:
  *              "200":
@@ -292,7 +292,7 @@ userRouter.delete("/:id", validateAuthorization, Controller.deleteUser);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Datos no válidos                        
+ *                                      example: Datos no válidos
  */
 userRouter.post("/", Controller.createUser);
 
@@ -300,7 +300,7 @@ userRouter.post("/", Controller.createUser);
  * @openapi
  * "/api/v1/users/login/":
  *      post:
- *          tags: [ Users ]           
+ *          tags: [ Users ]
  *          summary: Inicio de sesión
  *          description: Inicio de sión de un usuario. No necesita autorizacion
  *          requestBody:
@@ -338,7 +338,7 @@ userRouter.post("/", Controller.createUser);
  *                              properties:
  *                                  message:
  *                                      type: string
- *                                      example: Email o contraseña inválida                       
+ *                                      example: Email o contraseña inválida
  */
 userRouter.post("/login", Controller.login);
 

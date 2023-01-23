@@ -1,8 +1,7 @@
 import type { Request, Response } from "express";
-import { createHmac } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 import { sign } from "jsonwebtoken";
-
 const prisma = new PrismaClient();
 
 // Listar usuarios
@@ -99,27 +98,48 @@ export const deleteUser = async (
 export const login = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body;
-
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { email: email },
     });
 
-    if (user) {
-      const token = sign(
-        { name: user?.name, id: user?.id },
-        String(process.env.SECRET_KEY),
-        { expiresIn: "24h" }
-      );
-      res.status(200).json({
-        message: "Usuario logeado correctamente",
-        user: user,
-        token: token,
-      });
+    const hash = createHmac("sha256", "super-secret-key")
+      .update(password)
+      .digest("hex");
+
+    if (!user) {
+      res.status(401).json({ message: "Usuario no existe" });
     } else {
-      throw Error("Email o contraseña incorrecta");
+      const sameHashes = compareHashes(hash, user.password, "super-secret-key");
+
+      if (!sameHashes) {
+        res.status(401).json({
+          message: "Contraseña incorrecta",
+        });
+      } else {
+        const token = sign(
+          { name: user?.name, id: user?.id },
+          String(process.env.SECRET_KEY),
+          { expiresIn: "24h" }
+        );
+        res.status(200).json({
+          message: "Usuario logeado correctamente",
+          user: user,
+          token: token,
+        });
+      }
     }
   } catch (error) {
     console.log("error", error);
     res.status(500).json({ message: error });
   }
 };
+
+function compareHashes(
+  password1: string,
+  password2: string,
+  key: string
+): boolean {
+  const hash1 = createHmac("sha256", key).update(password1).digest("hex");
+  const hash2 = createHmac("sha256", key).update(password2).digest("hex");
+  return hash1 === hash2;
+}
