@@ -107,7 +107,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       .digest("hex");
 
     if (!user) {
-      res.status(401).json({ message: "Usuario no existe" });
+      res.status(404).json({ message: "Usuario no existe" });
     } else {
       const sameHashes = compareHashes(hash, user.password, "super-secret-key");
 
